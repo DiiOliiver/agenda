@@ -200,7 +200,7 @@
 <script>
     $('table').DataTable({
         "language": {
-            "url": "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese.json"
+            "url": "{{ url('plugins/datatables/lang/Portuguese.json') }}"
         }
     });
 </script>
