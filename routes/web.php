@@ -20,5 +20,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function() {
 
     Route::group(['namespace' => '\App\Http\Controllers\User', 'as' => 'users.'], function() {
         Route::get('usuarios', 'UserController@index')->name('index');
+        Route::get('usuarios/create', 'UserController@create')->name('create');
+        Route::post('usuarios/store', 'UserController@store')->name('store');
     });
 });
