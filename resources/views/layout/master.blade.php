@@ -15,6 +15,20 @@
     <link rel="stylesheet" href="{{ url('dist/css/adminlte.min.css') }}">
     <!-- Datatable 1.10.22 -->
     <link rel="stylesheet" href="{{ url('plugins/datatables/css/jquery.dataTables.min.css') }}">
+    <!-- iziToast v1.4.0 -->
+    <link rel="stylesheet" href="{{ url('plugins/izitoast/izitoast.min.css') }}">
+    <style>
+        [class$="-error"] {
+            color: #dc3545!important;
+        }
+
+        .toggle-password {
+            position: absolute;
+            top: 2.8rem;
+            right: 1rem;
+            cursor: pointer;
+        }
+    </style>
     @stack('css')
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
@@ -195,14 +209,41 @@
 <script src="{{ url('dist/js/demo.js') }}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ url('dist/js/pages/dashboard2.js') }}"></script>
-<!-- Datatable 1.10.22 -->
+<!-- Datatable v1.10.22 -->
 <script src="{{ url('plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
+<!-- Axios v0.21.1 -->
+<script src="{{ url('plugins/axios/axios.min.js') }}"></script>
+<!-- Validate Form -->
+<script src="{{ url('dist/js/validate-form.js') }}"></script>
+<!-- Jquery Mask -->
+<script src="{{ url('dist/js/jquery.mask.js') }}"></script>
+<!-- iziToast v1.4.0 -->
+<script src="{{ url('plugins/izitoast/izitoast.min.js') }}"></script>
 <script>
     $('table').DataTable({
         "language": {
             "url": "{{ url('plugins/datatables/lang/Portuguese.json') }}"
         }
     });
+    $('.mask-cpf').mask('999.999.999-99');
+    $('.mask-data_nascimento').mask('99/99/9999');
+
+    function tooglePassword(event) {
+        let input = $(event.target);
+        let password = $('.senha');
+
+        input.toggleClass('fa-eye-slash');
+        input.toggleClass('fa-eye');
+
+        if (input.hasClass('fa-eye-slash')) {
+            password.attr('type', 'text');
+        }
+
+        if (input.hasClass('fa-eye')) {
+            password.attr('type', 'password');
+        }
+    }
+    document.querySelector('.toggle-password').addEventListener('click', tooglePassword);
 </script>
 @stack('js')
 </body>

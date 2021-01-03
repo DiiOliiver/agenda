@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserStoreRequest;
 use App\Model\User;
-use Illuminate\Http\Request;
+use App\Services\LogService;
+use App\Services\User\UserStoreService;
 
 class UserController extends Controller
 {
@@ -19,8 +21,21 @@ class UserController extends Controller
         return view('users.form');
     }
 
-    public function store(Request $request)
+    public function store(UserStoreRequest $request)
     {
-        dd($request->all());
+        try {
+            $result = UserStoreService::store($request->except(['_token', 'confirmar_senha']));
+            if ($result['status']) {
+                return response()->json($result, 201);
+            }
+            return response()->json($result, 422);
+        } catch (\Throwable $throwable) {
+            LogService::registerErrorsInLog($throwable);
+            $result = [
+                'status' => false,
+                'mensagem' => 'Ocorreu um erro inesperado ao cadastrar usuário.'
+            ];
+            return response()->json($result, 500);
+        }
     }
 }
